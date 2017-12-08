@@ -5,13 +5,25 @@
 class Test_Theme_File extends WP_UnitTestCase {
 
 	public static function wpSetUpBeforeClass( WP_UnitTest_Factory $factory ) {
-		symlink( DIR_TESTDATA . '/theme-file-parent', WP_CONTENT_DIR . '/themes/theme-file-parent' );
-		symlink( DIR_TESTDATA . '/theme-file-child', WP_CONTENT_DIR . '/themes/theme-file-child' );
-	}
+		mkdir( WP_CONTENT_DIR . '/themes/theme-file-parent' );
+		copy( DIR_TESTDATA . '/theme-file-parent/parent-and-child.php', WP_CONTENT_DIR . '/themes/theme-file-parent/parent-and-child.php' );
+		copy( DIR_TESTDATA . '/theme-file-parent/parent-only.php', WP_CONTENT_DIR . '/themes/theme-file-parent/parent-only.php' );
+		copy( DIR_TESTDATA . '/theme-file-parent/style.css', WP_CONTENT_DIR . '/themes/theme-file-parent/style.css' );
+
+		mkdir( WP_CONTENT_DIR . '/themes/theme-file-child' );
+		copy( DIR_TESTDATA . '/theme-file-child/parent-and-child.php', WP_CONTENT_DIR . '/themes/theme-file-child/parent-and-child.php' );
+		copy( DIR_TESTDATA . '/theme-file-child/child-only.php', WP_CONTENT_DIR . '/themes/theme-file-child/child-only.php' );
+		copy( DIR_TESTDATA . '/theme-file-child/style.css', WP_CONTENT_DIR . '/themes/theme-file-child/style.css' );}
 
 	public static function wpTearDownAfterClass() {
-		unlink( WP_CONTENT_DIR . '/themes/theme-file-parent' );
-		unlink( WP_CONTENT_DIR . '/themes/theme-file-child' );
+		unlink( WP_CONTENT_DIR . '/themes/theme-file-parent/parent-and-child.php' );
+		unlink( WP_CONTENT_DIR . '/themes/theme-file-parent/parent-only.php' );
+		unlink( WP_CONTENT_DIR . '/themes/theme-file-parent/style.css' );
+		rmdir( WP_CONTENT_DIR . '/themes/theme-file-parent' );
+		unlink( WP_CONTENT_DIR . '/themes/theme-file-child/parent-and-child.php' );
+		unlink( WP_CONTENT_DIR . '/themes/theme-file-child/child-only.php' );
+		unlink( WP_CONTENT_DIR . '/themes/theme-file-child/style.css' );
+		rmdir( WP_CONTENT_DIR . '/themes/theme-file-child' );
 	}
 
 	/**
